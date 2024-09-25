@@ -1,0 +1,426 @@
+
+
+body {
+  font-family: 'TT Bluescreen', Arial, sans-serif;
+  background: linear-gradient(90deg, #004aad, #cb6ce6);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #1C172B;
+  height: 100px; /* Fixed height for the header */
+  box-sizing: border-box; /* Ensures padding is included in the height calculation */
+}
+
+.logo {
+  flex-shrink: 0; /* Prevents the logo from shrinking */
+}
+
+.logo img {
+  height: 100px; /* Adjust the height as needed */
+  width: auto; /* Maintain aspect ratio */
+}
+
+nav {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between nav items */
+  margin-left: 20px; /* Adjust if necessary to create space around logo */
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  justify-content: space-around;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.search-upload {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.search-upload input {
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+
+.upload-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-btn img {
+  width: 50px;
+  height: 50px;
+}
+.account-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.account-btn input {
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+
+.account {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 50px; /* Same width as the upload button */
+  height: 50px; /* Same height as the upload button */
+  padding: 0; 
+}
+
+.account img {
+  width: 100%; /* Ensure the image takes the full size of the button */
+  height: auto; /* Maintain aspect ratio */
+}
+
+main {
+  padding: 20px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  background: #242364;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.info {
+  margin: 10px 0;
+  text-align: center;
+  color: #D269E6; /* Apply the custom color */
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.like-btn, .dislike-btn {
+  background: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fff;
+  margin: 10px;
+}
+
+.like-btn:hover, .dislike-btn:hover {
+  color: #D269E6;
+}
+
+.comment-section {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.comment-section form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-section input[type="text"] {
+  width: 80%;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.comment-section button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #D269E6;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.preference-form {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.column {
+  flex: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  min-width: 200px;
+}
+
+.column label {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.column input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2); /* Adjust the size of the checkbox for better visibility */
+}
+
+@media (max-width: 768px) {
+  .column {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .column {
+    min-width: 100px;
+  }
+}
+
+
+.modal-content {
+  background-color: #242364;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-container {
+  display: flex;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.image-container img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  margin-top: 10px;
+}
+
+.details-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.details-container ul.preference-list {
+  display: flex;
+
+  gap: 10px;
+}
+
+.details-container ul.preference-list li {
+  width: calc(33.3333% - 10px);
+  display: flex;
+
+  margin-bottom: 5px;
+}
+
+.details-container label,
+.details-container textarea,
+.details-container input,
+.details-container button {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.details-container h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+
+.bio {
+  display: none; /* Initially hidden */
+  background-color: #fff; /* Example background color */
+  padding: 10px; /* Example padding */
+  margin-top: 10px; /* Example margin */
+  border-radius: 5px; /* Example border radius */
+}
+
+.gallery-item.expanded .bio {
+  display: block; /* Show bio when .expanded class is present */
+}
+
+/* locaton.css*/
+#map {
+  height: 500px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  background: #242364;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.info {
+  margin: 10px 0;
+  text-align: center;
+  color: #D269E6;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.like-btn, .dislike-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fff;
+}
+
+.like-btn:hover, .dislike-btn:hover {
+  color: #D269E6;
+}
+
+.gallery-item {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-item.expanded {
+  transform: scale(1.1);
+  z-index: 100;
+}
+
+.gallery-content {
+  position: relative;
+}
+
+.bio {
+  display: none;
+  background-color: #fff;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.gallery-item.expanded .bio {
+  display: block;
+}

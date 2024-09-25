@@ -1,0 +1,88 @@
+.upload-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1C172B; /* Match header background */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    color: #fff; /* White text color */
+    width: 90%; /* Responsive width */
+    max-width: 600px; /* Max width for the upload form */
+    max-height: 80vh; /* Max height to allow scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.upload-container h2 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.upload-container form {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.upload-container input[type="file"],
+.upload-container input[type="text"],
+.upload-container textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #D269E6; /* Use the accent color */
+    background: transparent; /* Transparent background */
+    color: #fff; /* White text */
+    font-family: 'TT Bluescreen', Arial, sans-serif; /* Match font */
+}
+
+.upload-container input[type="file"] {
+    color: #D269E6; /* Change file input text color */
+}
+
+.upload-container textarea {
+    resize: none; /* Prevent resizing */
+    height: 100px; /* Set a fixed height */
+}
+
+.upload-container h4 {
+    margin: 10px 0;
+}
+
+.upload-container button {
+    background: #D269E6; /* Use the accent color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Smooth background transition */
+}
+
+.upload-container button:hover {
+    background: #a052c3; /* Darker shade on hover */
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and label */
+}
+
+.image-preview {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center; /* Center the image */
+}
+
+.image-preview img {
+    width: 200px; /* Set fixed width */
+    height: 300px; /* Set fixed height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 5px; /* Rounded corners */
+}
