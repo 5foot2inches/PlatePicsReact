@@ -1,12 +1,80 @@
-
 import React, { useState } from 'react';
 import upvote from './resources/images/upvotebutton.png';
 import downvote from './resources/images/downvotebutton.png';
-
+import stPatrickPizza from './resources/images/St.PatrickPizza.jpeg';
+import baguetteOven from './resources/images/BaguetteOven.jpeg';
+import rollingPinDonuts from './resources/images/RollingPinDonuts.jpeg';
+import burgerPics from './resources/images/BurgerPics.jpeg';
+import charcuterieBoard from './resources/images/CharcuterieBoard.jpeg';
+import biscuitBomb from './resources/images/biscuitBomb.jpeg';
+import spanishLemonChicken from './resources/images/SpanishlemonChicken.jpeg';
+import breakfast from './resources/images/breakfast.jpeg';
 
 function Pictures({ uploads }) {
-  const [comments, setComments] = useState({}); // State to store comments for each picture
-  const [votes, setVotes] = useState({}); // State to track likes/dislikes
+  const [comments, setComments] = useState({});
+  const [votes, setVotes] = useState({});
+
+  const defaultUploads = [
+    {
+      image: stPatrickPizza,
+      location: 'Malibu Wines and Beer, West Hills, CA',
+      recipeName: "Pesto Sourdough Pizza",
+      diets: ["Italian"],
+      notes: "Green St. Patrick's day Pizza",
+    },
+    {
+      image: baguetteOven,
+      location: 'Malibu Wines and Beer, West Hills, CA',
+      recipeName: 'Baguette',
+      diets: ['Organic'],
+      notes: 'Freshly baked sourdough baguette',
+    },
+    {
+      image: rollingPinDonuts,
+      location: 'Rolling Pin, Camarillo, CA',
+      recipeName: 'Donut',
+      diets: ['Comfort Food'],
+      notes: 'Warm glazed donuts with sprinkles',
+    },
+    {
+      image: burgerPics,
+      location: 'HomeMade',
+      recipeName: 'HomeMade Burger',
+      diets: ['Comfort Food', 'American', 'Homemade'],
+      notes: 'Juicy homemade burger with all the fixings',
+    },
+    {
+      image: charcuterieBoard,
+      location: 'Malibu Wines and Beer, West Hills, CA',
+      recipeName: 'Charcuterie Board',
+      diets: ['Comfort Food'],
+      notes: 'Selection of fine cheeses and meats',
+    },
+    {
+      image: biscuitBomb,
+      location: 'Topanga Grain Co, Canoga Park, CA',
+      recipeName: 'Loaded Biscuit',
+      diets: ['Comfort Food', 'Breakfast', 'American'],
+      notes: 'Savory loaded biscuit with toppings',
+    },
+    {
+      image: spanishLemonChicken,
+      location: 'HomeMade',
+      recipeName: 'Spanish Chicken and Rice with lemon',
+      diets: ['European', 'Homemade'],
+      notes: 'Delicious lemon-infused Spanish chicken',
+    },
+    {
+      image: breakfast,
+      location: 'HomeMade',
+      recipeName: 'Eggs with Toast, Turkey Bacon, and sliced Apple',
+      diets: ['Comfort Food'],
+      notes: 'Classic breakfast with healthy options',
+    },
+  ];
+
+  // Change here: Prepend uploads to defaultUploads
+  const allUploads = [...defaultUploads, ...uploads]; // Default uploads first, then user uploads
 
   const handleCommentSubmit = (e, index) => {
     e.preventDefault();
@@ -14,12 +82,11 @@ function Pictures({ uploads }) {
     const commentText = commentInput.value;
 
     if (commentText) {
-      // Add the new comment to the picture's comment list
       setComments((prevComments) => ({
         ...prevComments,
         [index]: [...(prevComments[index] || []), commentText],
       }));
-      commentInput.value = ''; // Clear input
+      commentInput.value = '';
     }
   };
 
@@ -27,24 +94,22 @@ function Pictures({ uploads }) {
     setVotes((prevVotes) => {
       const currentVotes = prevVotes[index] || { likes: false, dislikes: false };
 
-      // Toggle 'like' vote
       if (type === 'like') {
         return {
           ...prevVotes,
           [index]: {
-            likes: !currentVotes.likes, // Toggle the like state
-            dislikes: false, // Reset dislike if previously disliked
+            likes: !currentVotes.likes,
+            dislikes: false,
           },
         };
       }
 
-      // Toggle 'dislike' vote
       if (type === 'dislike') {
         return {
           ...prevVotes,
           [index]: {
-            likes: false, // Reset like if previously liked
-            dislikes: !currentVotes.dislikes, // Toggle the dislike state
+            likes: false,
+            dislikes: !currentVotes.dislikes,
           },
         };
       }
@@ -55,10 +120,9 @@ function Pictures({ uploads }) {
 
   return (
     <div className="gallery">
-      {uploads.map((upload, index) => (
+      {allUploads.map((upload, index) => (
         <div key={index} className="gallery-item">
           <img src={upload.image} alt={upload.recipeName} />
-
           <div className="info">
             <p>Location: {upload.location}</p>
             <p>Recipe: {upload.recipeName}</p>
@@ -69,12 +133,10 @@ function Pictures({ uploads }) {
           <div className="actions">
             <button className="like-btn" onClick={() => handleVote(index, 'like')}>
               <img src={upvote} alt="Upvote" />
-              {/* Show +1 for likes if toggled, otherwise 0 */}
               <span className="like-count">{votes[index]?.likes ? 1 : 0}</span>
             </button>
             <button className="dislike-btn" onClick={() => handleVote(index, 'dislike')}>
               <img src={downvote} alt="Downvote" />
-              {/* Show +1 for dislikes if toggled, otherwise 0 */}
               <span className="dislike-count">{votes[index]?.dislikes ? 1 : 0}</span>
             </button>
           </div>
@@ -85,7 +147,6 @@ function Pictures({ uploads }) {
               <button type="submit">Post</button>
             </form>
 
-            {/* Render comments */}
             <div className="comments">
               {(comments[index] || []).map((comment, commentIndex) => (
                 <div key={commentIndex} className="comment">

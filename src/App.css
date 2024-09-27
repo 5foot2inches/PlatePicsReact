@@ -424,3 +424,39 @@ form {
 .gallery-item.expanded .bio {
   display: block;
 }
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between heading and dropdown */
+}
+
+.subreddit-dropdown {
+  background-color: #242364;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* For better visibility, you can increase the font size */
+.subreddit-dropdown option {
+  background-color: #1C172B;
+  color: #fff;
+}
+
+.submit-btn {
+  background-color: #D269E6;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px; /* Space above the button */
+}
+
+.submit-btn:hover {
+  background-color: #cb6ce6; /* Lighter shade on hover */
+}
