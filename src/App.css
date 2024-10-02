@@ -124,18 +124,61 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between; /* Ensures items are spaced with the comment section at the bottom */
+  height: 100%; /* Take up full height */
+  box-sizing: border-box; /* Ensure padding is included in height */
 }
+.gallery-item.expanded {
+  height: auto; /* Allow it to expand */
+
+}
+
+.exit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #D269E6;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 
 .gallery-item img {
   width: 100%;
+  height: auto; /* Maintain aspect ratio */
   border-radius: 10px;
+  flex-shrink: 0; /* Prevent the image from shrinking */
 }
 
 .info {
   margin: 10px 0;
   text-align: center;
-  color: #D269E6; /* Apply the custom color */
+  color: #D269E6;
+  flex-shrink: 0; /* Keep the info section at its normal size */
 }
+.like-btn, .dislike-btn {
+  background: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fff;
+  margin: 10px;
+  align-self: stretch; /* Ensures consistent button height */
+}
+
+.like-btn:hover, .dislike-btn:hover {
+  color: #D269E6;
+}
+
+.comment-section {
+  width: 100%;
+  margin-top: 10px;
+  flex-shrink: 0; /* Ensure the comment section stays at the bottom */
+}
+
 
 .actions {
   display: flex;
@@ -459,4 +502,77 @@ form {
 
 .submit-btn:hover {
   background-color: #cb6ce6; /* Lighter shade on hover */
+}
+.plate-date-container {
+  background-color: #242364;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.plate-date-container h1 {
+  color: #fff;
+  text-align: center;
+}
+
+.plate-date-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.plate-date-form label {
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.plate-date-form select {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+  background-color: #242364;
+  color: #fff;
+}
+
+.plate-date-form button {
+  background-color: #D269E6;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+.plate-date-form button:hover {
+  background-color: #cb6ce6;
+}
+
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.recipe-item {
+  background-color: #1C172B;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.recipe-item img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
 }

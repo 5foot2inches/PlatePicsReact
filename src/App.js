@@ -1,75 +1,119 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Use Routes instead of Switch
-import './App.css'; // Import your CSS file
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import './App.css';
 import logo from './resources/images/Logo.png';
 import uploadbtn from './resources/images/uploadbutton.png';
 import Accountbtn from './resources/images/accountbutton.png';
-import Upload from './Upload'; // Import the Upload component
-import Pictures from './Pictures'; // Import the Pictures component
+import Upload from './Upload';
+import Pictures from './Pictures';
 import Recommendation from './Recommendations';
 import PlateDate from './PlateDate';
+import Account from './account'; // Import the Account component
 
 function App() {
-  const [isUploadOpen, setIsUploadOpen] = useState(false); // State for upload dialog
-  const [uploads, setUploads] = useState([]); // State for uploads
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [uploads, setUploads] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+  const [currentUser, setCurrentUser] = useState(null); // Track current user
+  const [searchTerm, setSearchTerm] = useState(''); // State for search input
 
   const handleUploadOpen = () => {
-    setIsUploadOpen(true); // Open upload dialog
+    if (isLoggedIn) {
+      setIsUploadOpen(true);
+    } else {
+      alert("You must be logged in to upload images."); // Alert for not logged in
+    }
   };
 
-  const handleUploadClose = () => {
-    setIsUploadOpen(false); // Close upload dialog
-  };
+  const handleUploadClose = () => setIsUploadOpen(false);
 
-  // Function to handle adding new uploads
+  // Function to handle adding new uploads, pushing them to the front
   const addUpload = (newImage) => {
-    setUploads((prevUploads) => [...prevUploads, newImage]); // Update uploads state
+    setUploads((prevUploads) => [newImage, ...prevUploads]);
+
+    // Update the current user's uploaded images
+    if (currentUser) {
+      setCurrentUser((prevUser) => ({
+        ...prevUser,
+        uploadedImages: [newImage, ...prevUser.uploadedImages],
+      }));
+    }
   };
+
+  // Function to handle user login
+  const handleLogin = (user) => {
+    setIsLoggedIn(true); // Set login state to true
+    setCurrentUser(user); // Set current user
+    console.log('Logged in user:', user); // Optional: store user info as needed
+  };
+
+  // Function to handle user logout
+  const handleLogout = () => {
+    setIsLoggedIn(false); // Reset login state
+    setCurrentUser(null); // Clear current user
+  };
+
+  // Function to handle search input change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filter uploads based on search term, ensuring safety against undefined
+  const filteredUploads = uploads.filter((upload) =>
+    (upload.name ? upload.name.toLowerCase() : '').includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <Router> {/* Wrap everything in Router */}
+    <Router>
       <div>
         <header>
           <div className="logo">
-            <a href="/">
+            <Link to="/">
               <img src={logo} alt="Plate Pics Logo" />
-            </a>
+            </Link>
           </div>
           <nav>
             <ul>
-              <li><a href="/pictures">Pictures</a></li>
-              <li><a href="/locations">Locations</a></li>
-              <li><a href="/recommendations">Recommendations</a></li>
-              <li><a href="/platedate">Plate Date</a></li>
+              <li><Link to="/pictures">Pictures</Link></li>
+              <li><Link to="/locations">Locations</Link></li>
+              <li><Link to="/recommendations">Recommendations</Link></li>
+              <li><Link to="/platedate">Plate Date</Link></li>
             </ul>
             <div className="search-upload">
-              <input type="text" placeholder="Search..." />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearchChange} // Update state on input change
+              />
               <button
                 className="upload-btn"
                 id="uploadButton"
-                onClick={handleUploadOpen} // Open upload dialog
+                onClick={handleUploadOpen}
+                disabled={!isLoggedIn} // Disable the button if not logged in
               >
                 <img src={uploadbtn} alt="Upload" />
               </button>
             </div>
             <div className="account-btn">
-              <button className="account" id="accountButton">
-                <img src={Accountbtn} alt="Account" />
-              </button>
+              <Link to="/account">
+                <button className="account" id="accountButton">
+                  <img src={Accountbtn} alt="Account" />
+                  {isLoggedIn ? 'Account' : 'Login'}
+                </button>
+              </Link>
             </div>
           </nav>
         </header>
         <main>
-          {/* Set up routing */}
           <Routes>
-            <Route path="/pictures" element={<Pictures uploads={uploads} />} />
+            <Route path="/pictures" element={<Pictures uploads={filteredUploads} isLoggedIn={isLoggedIn} searchTerm={searchTerm} />} />
             <Route path="/recommendations" element={<Recommendation />} />
-            <Route path="/platedate" element={<PlateDate />} /> 
-            {/* You can add more routes here */}
+            <Route path="/platedate" element={<PlateDate />} />
+            <Route path="/account" element={<Account onLogin={handleLogin} onLogout={handleLogout} isLoggedIn={isLoggedIn} currentUser={currentUser} />} />
             <Route path="/" element={<h1>Welcome to Plate Pics!</h1>} />
           </Routes>
 
-          {/* Render Upload component if the upload dialog is open */}
           {isUploadOpen && <Upload onClose={handleUploadClose} onUpload={addUpload} />}
         </main>
       </div>
@@ -78,3 +122,4 @@ function App() {
 }
 
 export default App;
+

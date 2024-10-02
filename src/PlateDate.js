@@ -7,6 +7,8 @@ const PlateDate = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [cost, setCost] = useState(false);
+  const [proteinRich, setProteinRich] = useState(false); // New protein-rich state
 
   const cuisines = [
     'Italian', 
@@ -33,7 +35,9 @@ const PlateDate = () => {
     'Ketogenic',
     'Gluten Free',
     'Dairy Free',
-    'Pescetarian'
+    'Pescetarian', 
+    'Nut Free', 
+    'Healthy'
   ];
 
   const flavorIngredients = {
@@ -44,35 +48,53 @@ const PlateDate = () => {
     Salty: 'salt',
   };
 
+
   const fetchRecipes = async () => {
     setLoading(true);
     setError('');
 
     try {
-      const selectedIngredient = flavor ? flavorIngredients[flavor] : '';
-      const url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&diet=${diet}&number=10&apiKey=00df4f5f23504f8f86104a11400d1f93&includeIngredients=${selectedIngredient}`;
-      
-      console.log('Fetching URL:', url); // Log the URL for debugging
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (response.ok) {
-        if (data.results) {
-          setRecipes(data.results);
+        const selectedIngredient = flavor ? flavorIngredients[flavor] : '';
+        const proteinFilter = proteinRich ? '&minProtein=30' : ''; // Protein-rich filter
+        
+        // First fetch a list of recipes
+        const url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&diet=${diet}&number=10&apiKey=APIKEYHERE!&includeIngredients=${selectedIngredient}${proteinFilter}`;
+        console.log('Fetching URL:', url);
+        const response = await fetch(url);
+        const data = await response.json();
+  
+        if (response.ok) {
+          const fetchedRecipes = data.results || [];
+  
+          if (cost) {
+            // If cost filter is selected, fetch price breakdown for each recipe
+            const affordableRecipes = await Promise.all(fetchedRecipes.map(async (recipe) => {
+              const detailsUrl = `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=APIKEY HERE&includeNutrition=true`;
+              const detailsResponse = await fetch(detailsUrl);
+              const detailsData = await detailsResponse.json();
+  
+              // Calculate the total cost (price per serving * servings)
+              const totalCost = detailsData.pricePerServing * detailsData.servings / 100; // Divide by 100 to convert to dollars
+              return totalCost <= 20 ? { ...recipe, pricePerServing: detailsData.pricePerServing, servings: detailsData.servings } : null;
+            }));
+  
+            // Filter out null values and set affordable recipes
+            setRecipes(affordableRecipes.filter(recipe => recipe !== null));
+          } else {
+            // No cost filter, set recipes directly
+            setRecipes(fetchedRecipes);
+          }
         } else {
-          setRecipes([]);
+          throw new Error(data.message || 'Failed to fetch recipes');
         }
-      } else {
-        throw new Error(data.message || 'Failed to fetch recipes');
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        setError('Failed to fetch recipes. Please try again.');
+        setRecipes([]);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-      setError('Failed to fetch recipes. Please try again.');
-      setRecipes([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -80,9 +102,9 @@ const PlateDate = () => {
   };
 
   return (
-    <div>
+    <div className="plate-date-container">
       <h1>Find Your Perfect Plate!</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="plate-date-form" onSubmit={handleSubmit}>
         <label>
           Cuisine:
           <select value={cuisine} onChange={(e) => setCuisine(e.target.value)}>
@@ -110,21 +132,45 @@ const PlateDate = () => {
             ))}
           </select>
         </label>
-        <button type="submit" disabled={loading}>
+        
+        {/* Affordable Option */}
+        <label style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+          <input
+            type="checkbox"
+            checked={cost}
+            onChange={() => setCost(!cost)}
+            style={{ marginRight: '5px' }}
+          />
+          <strong>Affordable Option (under $20)</strong>
+        </label>
+
+    
+        {/* Protein-Rich Option */}
+        <label style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+          <input
+            type="checkbox"
+            checked={proteinRich}
+            onChange={() => setProteinRich(!proteinRich)}
+            style={{ marginRight: '5px' }}
+          />
+          <strong>Protein-Rich Option</strong>
+        </label>
+
+        <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? 'Matching...' : 'Match My Plate!'}
         </button>
       </form>
 
       <div>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Error Message */}
+        {error && <p className="error-message">{error}</p>} {/* Error Message */}
         {recipes.length > 0 ? (
           <div>
             <h2>Recipes:</h2>
-            <ul>
+            <ul className="recipe-list">
               {recipes.map((recipe) => (
-                <li key={recipe.id}>
+                <li className="recipe-item" key={recipe.id}>
                   <p>{recipe.title}</p>
-                  <img src={recipe.image} alt={recipe.title} style={{ width: '200px' }} />
+                  <img src={recipe.image} alt={recipe.title} />
                 </li>
               ))}
             </ul>
@@ -138,9 +184,3 @@ const PlateDate = () => {
 };
 
 export default PlateDate;
-
-
-
-
-
-

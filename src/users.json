@@ -1,0 +1,15 @@
+[
+    {
+      "username": "admin",
+      "password": "admin",
+      "likedImages": [],
+      "uploadedImages": []
+    },
+    {
+      "username": "user2",
+      "password": "password2",
+      "likedImages": [],
+      "uploadedImages": []
+    }
+  ]
+  

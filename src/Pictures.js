@@ -10,9 +10,10 @@ import biscuitBomb from './resources/images/biscuitBomb.jpeg';
 import spanishLemonChicken from './resources/images/SpanishlemonChicken.jpeg';
 import breakfast from './resources/images/breakfast.jpeg';
 
-function Pictures({ uploads }) {
+function Pictures({ uploads, isLoggedIn, searchTerm }) {
   const [comments, setComments] = useState({});
   const [votes, setVotes] = useState({});
+  const [showComments, setShowComments] = useState({});
 
   const defaultUploads = [
     {
@@ -73,14 +74,27 @@ function Pictures({ uploads }) {
     },
   ];
 
-  // Change here: Prepend uploads to defaultUploads
-  const allUploads = [...defaultUploads, ...uploads]; // Default uploads first, then user uploads
+  const allUploads = [...uploads, ...defaultUploads]; // Combine uploads and default uploads
+
+  // Filter the gallery items based on the search term
+  const filteredUploads = allUploads.filter(upload => {
+    const searchRegex = new RegExp(searchTerm, 'i'); // Create a regex for case-insensitive matching
+    return (
+      searchRegex.test(upload.recipeName) ||
+      searchRegex.test(upload.location) ||
+      upload.diets.some(diet => searchRegex.test(diet)) ||
+      searchRegex.test(upload.notes)
+    );
+  });
 
   const handleCommentSubmit = (e, index) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      alert('Please log in to comment.');
+      return;
+    }
     const commentInput = e.target.querySelector('input[type="text"]');
     const commentText = commentInput.value;
-
     if (commentText) {
       setComments((prevComments) => ({
         ...prevComments,
@@ -91,36 +105,37 @@ function Pictures({ uploads }) {
   };
 
   const handleVote = (index, type) => {
+    if (!isLoggedIn) {
+      alert('Please log in to vote.');
+      return;
+    }
     setVotes((prevVotes) => {
       const currentVotes = prevVotes[index] || { likes: false, dislikes: false };
-
       if (type === 'like') {
         return {
           ...prevVotes,
-          [index]: {
-            likes: !currentVotes.likes,
-            dislikes: false,
-          },
+          [index]: { likes: !currentVotes.likes, dislikes: false },
         };
-      }
-
-      if (type === 'dislike') {
+      } else if (type === 'dislike') {
         return {
           ...prevVotes,
-          [index]: {
-            likes: false,
-            dislikes: !currentVotes.dislikes,
-          },
+          [index]: { likes: false, dislikes: !currentVotes.dislikes },
         };
       }
-
       return prevVotes;
     });
   };
 
+  const toggleComments = (index) => {
+    setShowComments((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
   return (
     <div className="gallery">
-      {allUploads.map((upload, index) => (
+      {filteredUploads.map((upload, index) => (
         <div key={index} className="gallery-item">
           <img src={upload.image} alt={upload.recipeName} />
           <div className="info">
@@ -131,29 +146,48 @@ function Pictures({ uploads }) {
           </div>
 
           <div className="actions">
-            <button className="like-btn" onClick={() => handleVote(index, 'like')}>
+            <button
+              className="like-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleVote(index, 'like');
+              }}
+            >
               <img src={upvote} alt="Upvote" />
               <span className="like-count">{votes[index]?.likes ? 1 : 0}</span>
             </button>
-            <button className="dislike-btn" onClick={() => handleVote(index, 'dislike')}>
+            <button
+              className="dislike-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleVote(index, 'dislike');
+              }}
+            >
               <img src={downvote} alt="Downvote" />
               <span className="dislike-count">{votes[index]?.dislikes ? 1 : 0}</span>
             </button>
           </div>
 
           <div className="comment-section">
+            <button onClick={(e) => {
+              e.stopPropagation();
+              toggleComments(index);
+            }}>
+              {showComments[index] ? 'Hide Comments' : 'See Comments'}
+            </button>
+
+            {showComments[index] && (
+              <div className="comments">
+                {(comments[index] || []).map((comment, commentIndex) => (
+                  <div key={commentIndex} className="comment">{comment}</div>
+                ))}
+              </div>
+            )}
+
             <form className="comment-form" onSubmit={(e) => handleCommentSubmit(e, index)}>
               <input type="text" placeholder="Add a comment..." />
               <button type="submit">Post</button>
             </form>
-
-            <div className="comments">
-              {(comments[index] || []).map((comment, commentIndex) => (
-                <div key={commentIndex} className="comment">
-                  {comment}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       ))}
