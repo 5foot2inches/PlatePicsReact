@@ -9,6 +9,7 @@ import Pictures from './Pictures';
 import Recommendation from './Recommendations';
 import PlateDate from './PlateDate';
 import Account from './account'; // Import the Account component
+import Locations from './Locations'; // Import the Locations component
 
 function App() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -110,6 +111,7 @@ function App() {
             <Route path="/pictures" element={<Pictures uploads={filteredUploads} isLoggedIn={isLoggedIn} searchTerm={searchTerm} />} />
             <Route path="/recommendations" element={<Recommendation />} />
             <Route path="/platedate" element={<PlateDate />} />
+            <Route path="/locations" element={<Locations uploads={uploads} />} /> {/* Add the Locations route */}
             <Route path="/account" element={<Account onLogin={handleLogin} onLogout={handleLogout} isLoggedIn={isLoggedIn} currentUser={currentUser} />} />
             <Route path="/" element={<h1>Welcome to Plate Pics!</h1>} />
           </Routes>
@@ -122,4 +124,3 @@ function App() {
 }
 
 export default App;
-

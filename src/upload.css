@@ -3,21 +3,24 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #1C172B; /* Match header background */
+    background: #242364; /* Match header background */
     padding: 20px;
     border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow */
     z-index: 1000;
     color: #fff; /* White text color */
     width: 90%; /* Responsive width */
     max-width: 600px; /* Max width for the upload form */
     max-height: 80vh; /* Max height to allow scrolling */
     overflow-y: auto; /* Enable vertical scrolling */
+    transition: all 0.3s ease; /* Smooth transition on appearance */
 }
 
 .upload-container h2 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
+    font-size: 24px; /* Increased font size */
+    font-weight: bold; /* Bold title */
 }
 
 .upload-container form {
@@ -28,26 +31,35 @@
 .upload-container input[type="file"],
 .upload-container input[type="text"],
 .upload-container textarea {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px; /* Slightly larger padding */
+    margin-bottom: 15px; /* Increased margin for spacing */
     border-radius: 5px;
     border: 1px solid #D269E6; /* Use the accent color */
     background: transparent; /* Transparent background */
     color: #fff; /* White text */
     font-family: 'TT Bluescreen', Arial, sans-serif; /* Match font */
+    transition: border-color 0.3s ease; /* Smooth transition for focus */
 }
 
 .upload-container input[type="file"] {
     color: #D269E6; /* Change file input text color */
 }
 
+.upload-container input[type="text"]:focus,
+.upload-container textarea:focus {
+    border-color: #a052c3; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
 .upload-container textarea {
     resize: none; /* Prevent resizing */
-    height: 100px; /* Set a fixed height */
+    height: 120px; /* Set a fixed height */
 }
 
 .upload-container h4 {
-    margin: 10px 0;
+    margin: 15px 0; /* Increased margin for spacing */
+    font-size: 18px; /* Larger font size for subheadings */
+    text-transform: uppercase; /* Uppercase for better visibility */
 }
 
 .upload-container button {
@@ -55,19 +67,23 @@
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px;
+    padding: 12px; /* Slightly larger padding */
     cursor: pointer;
-    transition: background 0.3s ease; /* Smooth background transition */
+    font-weight: bold; /* Bold button text */
+    transition: background 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    margin: 5px; /* Add margin to all buttons */
 }
 
-.upload-container button:hover {
-    background: #a052c3; /* Darker shade on hover */
+.upload-container button:last-child {
+    margin-left: 5px; /* Optional: Add a specific margin to the Cancel button */
 }
+
+
 
 .checkbox-label {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px; /* Increased margin for spacing */
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -75,14 +91,101 @@
 }
 
 .image-preview {
-    margin: 10px 0;
+    margin: 15px 0; /* Increased margin for spacing */
     display: flex;
     justify-content: center; /* Center the image */
 }
 
 .image-preview img {
-    width: 200px; /* Set fixed width */
-    height: 300px; /* Set fixed height */
-    object-fit: cover; /* Maintain aspect ratio */
-    border-radius: 5px; /* Rounded corners */
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); /* Add shadow to images */
+    
+}
+.diet-cuisine-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the sections */
+    margin-bottom: 15px; /* Space below the container */
+}
+
+.diet-cuisine-container > div {
+    margin: 0 10px; /* Add margin between the two sections */
+    flex: 1; /* Allow sections to grow equally */
+}
+
+
+
+.upload-container button {
+    background: #D269E6; /* Use the accent color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px; /* Slightly larger padding */
+    cursor: pointer;
+    font-weight: bold; /* Bold button text */
+    transition: background 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    margin-top: 10px; /* Space above the button */
+}
+
+.upload-container button:last-child {
+    margin-left: 5px; /* Add a 5px margin to the Cancel button */
+}
+
+.file-upload-label {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    width: 100%; /* Ensure it takes the full width of the parent */
+    height: 70px; /* Set the height of the parent to match the button height */
+     margin-bottom: 15px;
+}
+
+.round-button {
+    display: flex; /* Use flex to center text inside */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 15px; /* Padding for the button */
+    background-color: #D269E6; /* Button color */
+    border-radius: 50%; /* Make it round */
+    width: 70px; /* Set the width */
+    height: 70px; /* Set the height */
+    color: #fff; /* Text color */
+    font-size: 18px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition for hover effect */
+ 
+}
+
+.round-button:hover {
+    background-color: #a052c3; /* Darker shade on hover */
+}
+
+
+.location-container {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Space below the container */
+}
+
+.location-container input[type="text"] {
+    flex: 1; /* Allow the input to grow */
+    margin-right: 10px; /* Space between input and checkbox */
+}
+
+
+
+/* Optional: Responsive adjustments */
+@media (max-width: 480px) {
+    .upload-container {
+        width: 95%; /* Make it even more responsive on small screens */
+    }
+
+    .upload-container h2 {
+        font-size: 20px; /* Adjust title size */
+    }
+
+    .upload-container h4 {
+        font-size: 16px; /* Adjust subheading size */
+    }
 }

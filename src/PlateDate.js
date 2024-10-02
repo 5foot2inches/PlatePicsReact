@@ -24,7 +24,10 @@ const PlateDate = () => {
     'Greek', 
     'Korean',
     'Vietnamese',
-    'Brazilian'
+    'Brazilian',
+    'Middle Eastern', 
+    'Breakfast', 
+    'Dessert'
   ];
 
   const diets = [

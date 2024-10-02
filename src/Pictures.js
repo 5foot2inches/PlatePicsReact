@@ -20,7 +20,8 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       image: stPatrickPizza,
       location: 'Malibu Wines and Beer, West Hills, CA',
       recipeName: "Pesto Sourdough Pizza",
-      diets: ["Italian"],
+      diets: ["No Preference"],
+      cuisines: ['Italian'], 
       notes: "Green St. Patrick's day Pizza",
     },
     {
@@ -28,6 +29,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'Malibu Wines and Beer, West Hills, CA',
       recipeName: 'Baguette',
       diets: ['Organic'],
+      cuisines: ['French'], 
       notes: 'Freshly baked sourdough baguette',
     },
     {
@@ -35,6 +37,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'Rolling Pin, Camarillo, CA',
       recipeName: 'Donut',
       diets: ['Comfort Food'],
+      cuisines: ['American'], 
       notes: 'Warm glazed donuts with sprinkles',
     },
     {
@@ -42,6 +45,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'HomeMade',
       recipeName: 'HomeMade Burger',
       diets: ['Comfort Food', 'American', 'Homemade'],
+      cuisines: ['American'], 
       notes: 'Juicy homemade burger with all the fixings',
     },
     {
@@ -49,6 +53,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'Malibu Wines and Beer, West Hills, CA',
       recipeName: 'Charcuterie Board',
       diets: ['Comfort Food'],
+      cuisines: ['French'], 
       notes: 'Selection of fine cheeses and meats',
     },
     {
@@ -56,6 +61,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'Topanga Grain Co, Canoga Park, CA',
       recipeName: 'Loaded Biscuit',
       diets: ['Comfort Food', 'Breakfast', 'American'],
+      cuisines: ['American'], 
       notes: 'Savory loaded biscuit with toppings',
     },
     {
@@ -63,6 +69,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'HomeMade',
       recipeName: 'Spanish Chicken and Rice with lemon',
       diets: ['European', 'Homemade'],
+      cuisines: ['Spanish'], 
       notes: 'Delicious lemon-infused Spanish chicken',
     },
     {
@@ -70,20 +77,22 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       location: 'HomeMade',
       recipeName: 'Eggs with Toast, Turkey Bacon, and sliced Apple',
       diets: ['Comfort Food'],
+      cuisines: ['Breakfast'], 
       notes: 'Classic breakfast with healthy options',
     },
   ];
 
-  const allUploads = [...uploads, ...defaultUploads]; // Combine uploads and default uploads
+  const allUploads = [...uploads, ...defaultUploads];
 
   // Filter the gallery items based on the search term
   const filteredUploads = allUploads.filter(upload => {
-    const searchRegex = new RegExp(searchTerm, 'i'); // Create a regex for case-insensitive matching
+    const searchRegex = new RegExp(searchTerm, 'i');
     return (
       searchRegex.test(upload.recipeName) ||
       searchRegex.test(upload.location) ||
       upload.diets.some(diet => searchRegex.test(diet)) ||
-      searchRegex.test(upload.notes)
+      searchRegex.test(upload.notes) ||
+      upload.cuisines.some(cuisine => searchRegex.test(cuisine)) // Filter by cuisines
     );
   });
 
@@ -142,6 +151,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
             <p>Location: {upload.location}</p>
             <p>Recipe: {upload.recipeName}</p>
             <p>Diets: {upload.diets.join(', ')}</p>
+            <p>Cuisines: {upload.cuisines.join(', ')}</p> {/* Display cuisines */}
             <p>Notes: {upload.notes}</p>
           </div>
 

@@ -576,3 +576,73 @@ form {
   text-align: center;
   margin-top: 20px;
 }
+
+/* locations.js styling */
+.location-container {
+  padding: 20px;
+  text-align: center; /* Center the text for all headings */
+}
+
+.main-title {
+  font-size: 2em; /* Increase the main title font size */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center; /* Center the search inputs and button */
+  margin-bottom: 20px;
+}
+
+.search-container input {
+  padding: 10px; /* Increase padding for inputs */
+  margin: 0 10px; /* Space between inputs */
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+  width: 200px; /* Set a fixed width for inputs */
+}
+
+.search-btn {
+  padding: 10px 20px; /* Increase button size */
+  background: #242364; /* Match with your app color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em; /* Increase font size */
+}
+/* h1 title cernter */
+.findRest{
+  text-align: center;
+  text-shadow: #1C172B;
+}
+
+/* Search title cerntered */
+.restSearch{
+  text-align: center;
+}
+
+/* Upload Criteria  title cernter */
+.uploadCriteria{
+  text-align: center ;
+}
+
+
+.search-btn:hover {
+  background: #b25cdb; /* Slightly darker color on hover */
+}
+
+.map-container {
+  margin-bottom: 20px; /* Space below the map */
+}
+
+.gallery-container {
+  margin: 20px 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
