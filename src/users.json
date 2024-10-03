@@ -4,12 +4,7 @@
         "password": "admin",
         "likedImages": [],
         "uploadedImages": [ ],
-        "comments": [
-            {
-                "imageId": "image_unique_id",
-                "text": "Great pizza!"
-            }
-        ]
+        "comments": [ ]
     },
     {
         "username": "user2",
