@@ -1,15 +1,21 @@
 [
     {
-      "username": "admin",
-      "password": "admin",
-      "likedImages": [],
-      "uploadedImages": []
+        "username": "admin",
+        "password": "admin",
+        "likedImages": [],
+        "uploadedImages": [ ],
+        "comments": [
+            {
+                "imageId": "image_unique_id",
+                "text": "Great pizza!"
+            }
+        ]
     },
     {
-      "username": "user2",
-      "password": "password2",
-      "likedImages": [],
-      "uploadedImages": []
+        "username": "user2",
+        "password": "password2",
+        "likedImages": [],
+        "uploadedImages": [],
+        "comments": []
     }
-  ]
-  
+]

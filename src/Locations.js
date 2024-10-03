@@ -16,7 +16,6 @@ function Location({ uploads = [], defaultUploads = [] }) {
     const service = new window.google.maps.places.PlacesService(document.createElement('div'));
     let keyword = searchTerm;
 
-    // Include cuisine and diet in the search keyword if provided
     if (cuisine) {
       keyword += ` ${cuisine}`;
     }
@@ -54,14 +53,17 @@ function Location({ uploads = [], defaultUploads = [] }) {
     const matchesCuisine = cuisine ? upload.cuisines.includes(cuisine) : true;
     const matchesDiet = diet ? upload.diets.includes(diet) : true;
 
-    console.log("Checking upload:", upload);
-    console.log("Matches Location:", matchesLocation, "| Matches Cuisine:", matchesCuisine, "| Matches Diet:", matchesDiet);
-
     return matchesLocation && matchesCuisine && matchesDiet;
   });
 
-  // If no uploads match the criteria, fallback to default uploads
-  const uploadsToDisplay = filteredUploads.length > 0 ? filteredUploads : defaultUploads;
+  // Fallback to default uploads if no user uploads match the criteria
+  const uploadsToDisplay = filteredUploads.length > 0 ? filteredUploads : defaultUploads.filter(upload => {
+    const matchesLocation = upload.location.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCuisine = cuisine ? upload.cuisines.includes(cuisine) : true;
+    const matchesDiet = diet ? upload.diets.includes(diet) : true;
+
+    return matchesLocation && matchesCuisine && matchesDiet;
+  });
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -69,7 +71,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
 
   return (
     <div>
-      <h1 class ='findRest'>Find Restaurants:</h1>
+      <h1>Find Restaurants:</h1>
       <div className="search-container">
         <input
           type="text"
@@ -89,7 +91,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
           onChange={(e) => setDiet(e.target.value)}
           placeholder="Enter diet (optional)"
         />
-        <button class ='search-btn' onClick={onSearch}>Search</button>
+        <button onClick={onSearch}>Search</button>
       </div>
 
       {/* Display map */}
@@ -109,7 +111,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
 
       {/* Show restaurants in gallery style */}
       <div className="gallery-container">
-        <h2 class ='restSearch'>Restaurants Based On Your Search:</h2>
+        <h2>Restaurants Based On Your Search:</h2>
         <div className="gallery">
           {restaurants.map((restaurant, index) => (
             <div key={index} className="gallery-item">
@@ -130,7 +132,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
 
       {/* Show uploads based on search criteria or fallback to default uploads */}
       <div className="gallery-container">
-        <h2 class='uploadCriteria'>User Uploads with Same Criteria:</h2>
+        <h2>User Uploads with Same Criteria:</h2>
         <div className="gallery">
           {uploadsToDisplay.map((upload, index) => (
             <div key={index} className="gallery-item">

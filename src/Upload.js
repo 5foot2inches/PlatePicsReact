@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './upload.css';
-import platepic from './resources/images/platepic.png'
+import platepic from './resources/images/platepic.png';
 
-function Upload({ onClose, onUpload }) {
+function Upload({ onClose, onUpload, username }) { // Accept username as a prop
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState('');
   const [recipeName, setRecipeName] = useState('');
   const [diets, setDiets] = useState([]);
   const [cuisines, setCuisines] = useState([]);
   const [notes, setNotes] = useState('');
-  const [isHomemade, setIsHomemade] = useState(false); // New state for homemade
+  const [isHomemade, setIsHomemade] = useState(false);
 
   const dietOptions = [
     'No Preference', 'Vegan', 'Vegetarian', 'Pescatarian',
@@ -27,7 +27,7 @@ function Upload({ onClose, onUpload }) {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file)); // Preview the image
+      setImage(URL.createObjectURL(file));
     }
   };
 
@@ -53,14 +53,16 @@ function Upload({ onClose, onUpload }) {
     e.preventDefault();
     const newUpload = {
       image,
-      location: isHomemade ? "Homemade" : location, // Use "Homemade" if the checkbox is checked
+      location: isHomemade ? "Homemade" : location,
       recipeName,
       diets,
       cuisines,
       notes,
+      username, // Automatically include the username
+      userUploaded: true, // Ensure to set this flag for new uploads
     };
-    onUpload(newUpload);  // Send image data to App.js
-    onClose();  // Close the upload form
+    onUpload(newUpload);
+    onClose();
   };
 
   return (
@@ -78,7 +80,7 @@ function Upload({ onClose, onUpload }) {
           accept="image/*"
           onChange={handleImageChange}
           required
-          style={{ display: 'none' }} // Hide the default file input
+          style={{ display: 'none' }}
         />
         {image && (
           <div className="image-preview">
@@ -89,9 +91,9 @@ function Upload({ onClose, onUpload }) {
           <input
             type="text"
             placeholder="Location"
-            value={isHomemade ? "" : location} // Clear the input if homemade
+            value={isHomemade ? "" : location}
             onChange={(e) => setLocation(e.target.value)}
-            disabled={isHomemade} // Disable input if homemade is checked
+            disabled={isHomemade}
           />
           <label>
             <input
@@ -147,7 +149,6 @@ function Upload({ onClose, onUpload }) {
       </form>
     </div>
   );
-
 }
 
 export default Upload;

@@ -23,6 +23,8 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       diets: ["No Preference"],
       cuisines: ['Italian'], 
       notes: "Green St. Patrick's day Pizza",
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: baguetteOven,
@@ -31,6 +33,8 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       diets: ['Organic'],
       cuisines: ['French'], 
       notes: 'Freshly baked sourdough baguette',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: rollingPinDonuts,
@@ -39,14 +43,18 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       diets: ['Comfort Food'],
       cuisines: ['American'], 
       notes: 'Warm glazed donuts with sprinkles',
+      username: '5foot2inches', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: burgerPics,
       location: 'HomeMade',
       recipeName: 'HomeMade Burger',
-      diets: ['Comfort Food', 'American', 'Homemade'],
+      diets: ['Comfort Food'],
       cuisines: ['American'], 
       notes: 'Juicy homemade burger with all the fixings',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: charcuterieBoard,
@@ -55,22 +63,28 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       diets: ['Comfort Food'],
       cuisines: ['French'], 
       notes: 'Selection of fine cheeses and meats',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: biscuitBomb,
       location: 'Topanga Grain Co, Canoga Park, CA',
       recipeName: 'Loaded Biscuit',
-      diets: ['Comfort Food', 'Breakfast', 'American'],
+      diets: ['Comfort Food'],
       cuisines: ['American'], 
       notes: 'Savory loaded biscuit with toppings',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: spanishLemonChicken,
       location: 'HomeMade',
       recipeName: 'Spanish Chicken and Rice with lemon',
-      diets: ['European', 'Homemade'],
+      diets: ['No Preference'],
       cuisines: ['Spanish'], 
       notes: 'Delicious lemon-infused Spanish chicken',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
     {
       image: breakfast,
@@ -79,6 +93,8 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       diets: ['Comfort Food'],
       cuisines: ['Breakfast'], 
       notes: 'Classic breakfast with healthy options',
+      username: 'admin', // Simulating upload by 'admin'
+      userUploaded: true,
     },
   ];
 
@@ -148,12 +164,25 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
         <div key={index} className="gallery-item">
           <img src={upload.image} alt={upload.recipeName} />
           <div className="info">
-            <p>Location: {upload.location}</p>
-            <p>Recipe: {upload.recipeName}</p>
-            <p>Diets: {upload.diets.join(', ')}</p>
-            <p>Cuisines: {upload.cuisines.join(', ')}</p> {/* Display cuisines */}
-            <p>Notes: {upload.notes}</p>
+              <div className="info-header">
+                <span className="username"><strong>{upload.username}</strong></span>
+              </div>
+              
+
+              <p className="recipe-name">{upload.recipeName}</p>
+              
+              <span className="location">{upload.location}</span>
+              
+              <p className="notes">
+                {upload.notes.length > 100 ? `${upload.notes.substring(0, 100)}...` : upload.notes}
+                {upload.notes.length > 100 && <span className="see-more">See More</span>}
+              </p>
+              <div className="tags">
+                <span className="diets"><i className="fa fa-leaf"></i> {upload.diets.join(', ')}</span>
+                <span className="cuisines"><i className="fa fa-utensils"></i> {upload.cuisines.join(', ')}</span>
+              </div>
           </div>
+
 
           <div className="actions">
             <button
@@ -179,6 +208,10 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
           </div>
 
           <div className="comment-section">
+          <form className="comment-form" onSubmit={(e) => handleCommentSubmit(e, index)}>
+              <input type="text" placeholder="Add a comment..." />
+              <button type="submit">Post</button>
+            </form>
             <button onClick={(e) => {
               e.stopPropagation();
               toggleComments(index);
@@ -194,10 +227,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
               </div>
             )}
 
-            <form className="comment-form" onSubmit={(e) => handleCommentSubmit(e, index)}>
-              <input type="text" placeholder="Add a comment..." />
-              <button type="submit">Post</button>
-            </form>
+           
           </div>
         </div>
       ))}
