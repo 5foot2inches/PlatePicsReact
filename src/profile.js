@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Profile.css';
 
 function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,10 +11,8 @@ function Profile() {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    // Logic for signing up (mocked here)
     if (username && password) {
       setIsSigningUp(false);
-      // Optionally: Clear the fields
       setUsername('');
       setPassword('');
     }
@@ -21,10 +20,8 @@ function Profile() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Logic for validating the login (mocked here)
     if (username && password) {
       setIsLoggedIn(true);
-      // Optionally: Clear the fields
       setUsername('');
       setPassword('');
     }
@@ -32,7 +29,7 @@ function Profile() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUploads([]); // Clear uploads on logout if needed
+    setUploads([]);
   };
 
   const handleImageChange = (e) => {
@@ -45,19 +42,20 @@ function Profile() {
   const handleUpload = () => {
     if (image) {
       setUploads([...uploads, image]);
-      setImage(null); // Clear the image after upload
+      setImage(null);
     }
   };
 
   return (
-    <div className="profile">
+    <div className="profile-container">
       {!isLoggedIn ? (
-        <>
+        <div className="login-card">
           {!isSigningUp ? (
             <form onSubmit={handleLogin}>
               <h2>Login</h2>
               <input 
                 type="text" 
+                className="input-field" 
                 placeholder="Username" 
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)} 
@@ -65,15 +63,16 @@ function Profile() {
               />
               <input 
                 type="password" 
+                className="input-field" 
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 required 
               />
-              <button type="submit">Login</button>
+              <button className="btn-primary" type="submit">Login</button>
               <p>
                 Don't have an account? 
-                <button type="button" onClick={() => setIsSigningUp(true)}> Sign Up</button>
+                <button className="btn-secondary" type="button" onClick={() => setIsSigningUp(true)}> Sign Up</button>
               </p>
             </form>
           ) : (
@@ -81,6 +80,7 @@ function Profile() {
               <h2>Sign Up</h2>
               <input 
                 type="text" 
+                className="input-field" 
                 placeholder="Username" 
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)} 
@@ -88,37 +88,42 @@ function Profile() {
               />
               <input 
                 type="password" 
+                className="input-field" 
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 required 
               />
-              <button type="submit">Sign Up</button>
+              <button className="btn-primary" type="submit">Sign Up</button>
               <p>
                 Already have an account? 
-                <button type="button" onClick={() => setIsSigningUp(false)}> Login</button>
+                <button className="btn-secondary" type="button" onClick={() => setIsSigningUp(false)}> Login</button>
               </p>
             </form>
           )}
-        </>
+        </div>
       ) : (
-        <div>
+        <div className="logged-in-view">
           <h2>Welcome, {username}!</h2>
-          <button onClick={handleLogout}>Logout</button>
+          <button className="btn-logout" onClick={handleLogout}>Logout</button>
+          
           <div className="upload-section">
-            {image && <img src={image} alt="Uploaded" style={{ width: '200px' }} />}
-            <input type="file" onChange={handleImageChange} />
-            <button onClick={handleUpload}>Upload</button>
+            {image && <img src={image} alt="Uploaded" className="preview-image" />}
+            <input type="file" className="upload-input" onChange={handleImageChange} />
+            <button className="btn-upload" onClick={handleUpload}>Upload</button>
           </div>
+
           <div className="uploaded-album">
             <h3>Your Uploads</h3>
-            {uploads.length > 0 ? (
-              uploads.map((imgSrc, index) => (
-                <img key={index} src={imgSrc} alt={`Upload ${index + 1}`} style={{ width: '100px', margin: '5px' }} />
-              ))
-            ) : (
-              <p>No uploads yet.</p>
-            )}
+            <div className="gallery">
+              {uploads.length > 0 ? (
+                uploads.map((imgSrc, index) => (
+                  <img key={index} src={imgSrc} alt={`Upload ${index + 1}`} className="gallery-item" />
+                ))
+              ) : (
+                <p>No uploads yet.</p>
+              )}
+            </div>
           </div>
         </div>
       )}

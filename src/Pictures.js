@@ -163,6 +163,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
       {filteredUploads.map((upload, index) => (
         <div key={index} className="gallery-item">
           <img src={upload.image} alt={upload.recipeName} />
+          
           <div className="info">
               <div className="info-header">
                 <span className="username"><strong>{upload.username}</strong></span>
@@ -229,6 +230,7 @@ function Pictures({ uploads, isLoggedIn, searchTerm }) {
 
            
           </div>
+          
         </div>
       ))}
     </div>

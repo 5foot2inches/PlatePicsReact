@@ -8,7 +8,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
   const [restaurants, setRestaurants] = useState([]);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'APIKEYHERE', // Replace with your API key
+    googleMapsApiKey: 'APIKEYHERE!', // Replace with your API key
     libraries: ['places'],
   });
 
@@ -77,7 +77,7 @@ function Location({ uploads = [], defaultUploads = [] }) {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter location (e.g., Camarillo)"
+          placeholder="Enter location + State (e.g., Camarillo, CA)"
         />
         <input
           type="text"

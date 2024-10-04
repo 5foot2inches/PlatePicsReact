@@ -34,7 +34,7 @@ const PlateDate = () => {
       const selectedIngredient = flavor ? flavorIngredients[flavor] : '';
       const proteinFilter = proteinRich ? '&minProtein=30' : '';
 
-      const url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&diet=${diet}&number=10&apiKey=APIKEYHERE&includeIngredients=${selectedIngredient}${proteinFilter}`;
+      const url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&diet=${diet}&number=10&apiKey=APIKEYHERE!&includeIngredients=${selectedIngredient}${proteinFilter}`;
       const response = await fetch(url);
       const data = await response.json();
   
@@ -43,7 +43,7 @@ const PlateDate = () => {
 
         if (cost) {
           const affordableRecipes = await Promise.all(fetchedRecipes.map(async (recipe) => {
-            const detailsUrl = `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=APIKEYHERE&includeNutrition=true`;
+            const detailsUrl = `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=APIKEYHERE!includeNutrition=true`;
             const detailsResponse = await fetch(detailsUrl);
             const detailsData = await detailsResponse.json();
             const totalCost = detailsData.pricePerServing * detailsData.servings / 100;

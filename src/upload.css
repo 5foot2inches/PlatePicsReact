@@ -78,7 +78,7 @@
     margin-left: 5px; /* Optional: Add a specific margin to the Cancel button */
 }
 
-
+x
 
 .checkbox-label {
     display: flex;
@@ -138,7 +138,6 @@
     align-items: center; /* Center content vertically */
     width: 100%; /* Ensure it takes the full width of the parent */
     height: 70px; /* Set the height of the parent to match the button height */
-     margin-bottom: 15px;
 }
 
 .round-button {
@@ -154,7 +153,6 @@
     font-size: 18px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Transition for hover effect */
- 
 }
 
 .round-button:hover {

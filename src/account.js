@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import usersData from './users.json'; // Your local user data
+import './Profile.css'
 
 function Account({ onLogin, onLogout, isLoggedIn, currentUser }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -29,6 +30,7 @@ function Account({ onLogin, onLogout, isLoggedIn, currentUser }) {
         onLogin(newUser); // Set new user as current
         setError('');
       }
+      
     }
   };
 
@@ -43,19 +45,21 @@ function Account({ onLogin, onLogout, isLoggedIn, currentUser }) {
     <h2>Hello, {currentUser.username}!</h2>
     <h3>Your Uploads:</h3>
     <ul>
-      {currentUser.uploadedImages.length > 0 ? (
-        currentUser.uploadedImages.map((imageObj, index) => (
-          <li key={index}>
-            <img src={imageObj.image} alt={`Uploaded ${index}`} style={{ width: '100px', height: 'auto' }} /> {/* Adjust the size as needed */}
-            <p>Location: {imageObj.location}</p>
-            <p>Recipe Name: {imageObj.recipeName}</p>
-            <p>Diets: {imageObj.diets.join(', ')}</p> {/* Assuming diets is an array */}
-            <p>Notes: {imageObj.notes}</p>
-          </li>
-        ))
-      ) : (
-        <p>No uploads yet.</p>
-      )}
+    {currentUser.uploadedImages.length > 0 ? (
+  <div className="uploads-container">
+    {currentUser.uploadedImages.map((imageObj, index) => (
+      <div className="upload-item" key={index}>
+        <img src={imageObj.image} alt={`Uploaded ${index}`} />
+        <p>Location: {imageObj.location}</p>
+        <p>Recipe Name: {imageObj.recipeName}</p>
+        <p>Diets: {imageObj.diets.join(', ')}</p>
+        <p>Notes: {imageObj.notes}</p>
+      </div>
+    ))}
+  </div>
+) : (
+  <p>No uploads yet.</p>
+)}
     </ul>
     <button onClick={handleLogout}>Logout</button>
   </div>

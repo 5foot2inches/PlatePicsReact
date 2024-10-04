@@ -19,6 +19,7 @@ import biscuitBomb from './resources/images/biscuitBomb.jpeg';
 import spanishLemonChicken from './resources/images/SpanishlemonChicken.jpeg';
 import breakfast from './resources/images/breakfast.jpeg';
 
+
 const defaultUploads = [
   {
     image: stPatrickPizza,
@@ -104,6 +105,7 @@ const defaultUploads = [
 
 
 
+
 function App() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [uploads, setUploads] = useState([]);
@@ -137,7 +139,16 @@ function App() {
   // Function to handle user login
   const handleLogin = (user) => {
     setIsLoggedIn(true); // Set login state to true
-    setCurrentUser(user); // Set current user
+    
+    // If the logged-in user is "admin", merge their uploaded images with default uploads
+    const userUploads = user.username === 'admin' 
+      ? [...defaultUploads, ...(user.uploadedImages || [])]
+      : user.uploadedImages || [];
+  
+    setCurrentUser({
+      ...user,
+      uploadedImages: userUploads, // Set merged uploads for admin, or existing uploads for other users
+    });
     console.log('Logged in user:', user); // Optional: store user info as needed
   };
 
@@ -201,13 +212,24 @@ function App() {
         </header>
         <main>
         <Routes>
-  <Route path="/pictures" element={<Pictures uploads={filteredUploads} isLoggedIn={isLoggedIn} searchTerm={searchTerm} />} />
-  <Route path="/recommendations" element={<Recommendation />} />
-  <Route path="/platedate" element={<PlateDate />} />
-  <Route path="/locations" element={<Locations uploads={uploads} defaultUploads={defaultUploads} />} /> {/* Add the defaultUploads prop */}
-  <Route path="/account" element={<Account onLogin={handleLogin} onLogout={handleLogout} isLoggedIn={isLoggedIn} currentUser={currentUser} />} />
-  <Route path="/" element={<h1>Welcome to Plate Pics!</h1>} />
-</Routes>
+          <Route path="/pictures" element={<Pictures uploads={filteredUploads} isLoggedIn={isLoggedIn} searchTerm={searchTerm} />} />
+          <Route path="/recommendations" element={<Recommendation />} />
+          <Route path="/platedate" element={<PlateDate />} />
+          <Route path="/locations" element={<Locations uploads={[...uploads,...defaultUploads]} />} /> {/* Add the defaultUploads prop */}
+          <Route 
+  path="/account" 
+  element={
+    <Account 
+      onLogin={handleLogin} 
+      onLogout={handleLogout} 
+      isLoggedIn={isLoggedIn} 
+      currentUser={currentUser} 
+    />
+  } 
+/>
+          <Route path="/" element={<h1>Welcome to Plate Pics!</h1>} />
+      
+        </Routes>
 
 
           {/* Render Upload component when isUploadOpen is true, passing the username */}

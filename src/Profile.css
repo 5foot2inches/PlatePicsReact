@@ -1,0 +1,113 @@
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1C172B;; 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-form h2 {
+    color: white; 
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .auth-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  .auth-form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #b25cdb; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-form button:hover {
+    background-color: #165bb4; 
+  }
+  
+  .auth-form .error {
+    color: #e74c3c; 
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .auth-form ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .auth-form li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .auth-form img {
+    display: block;
+    max-width: 100px;
+    margin: 0 auto 10px;
+  }
+  
+  .auth-form p {
+    margin: 5px 0;
+    color: white; 
+  }
+  .uploads-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    padding: 20px;
+    margin: 0 auto; /* Center the container */
+    background: linear-gradient(90deg, #004aad, #cb6ce6);
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Strong shadow effect */
+    color: #fff; /* White text */
+    width: 90%; /* Responsive width */
+    max-width: 1200px; /* Max width for the container */
+  }
+  .upload-item {
+    background-color: #1f1f53; /* Darker background for each item */
+    color: #f1f1f1;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease; /* Subtle scaling effect */
+  }
+  
+  /* Image styling within each upload item */
+  .upload-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for upload text content */
+  .upload-item p {
+    margin: 5px 0;
+  }
+  
+  /* Hover effect on each upload item */
+  .upload-item:hover {
+    transform: scale(1.05); /* Slight scaling on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Highlighted shadow */
+  }
